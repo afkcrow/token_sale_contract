@@ -1,0 +1,36 @@
+.anchor
+.DS_Store
+target
+**/*.rs.bk
+node_modules
+test-ledger
+.yarn
+
+# Keypairs — never commit secret keys
+*keypair*.json
+my-keypair.json
+id.json
+*.pem
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# IDE / tooling
+.idea
+.idea/
+.vscode
+.vscode/settings.json
+.claude/
+
+# Shell / system dotfiles (should not be in a project repo)
+.bash_profile
+.bashrc
+.zshrc
+.zprofile
+.profile
+.gitconfig
+.gitmodules
+.mcp.json
+.ripgreprc
