@@ -15,4 +15,4 @@ cluster = "Localnet"
 wallet = "~/.config/solana/solanakey-id.json"
 
 [scripts]
-test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
+test = "solana program deploy target/deploy/token_sale_project.so --program-id target/deploy/token_sale_project-keypair.json -u localhost && yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
