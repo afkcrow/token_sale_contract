@@ -69,6 +69,14 @@ describe("token_sale_project", () => {
     const now = Math.floor(Date.now() / 1000);
     const startTs = new BN(now - 60); // sale already open
     const endTs = new BN(now + 3600); // sale closes in 1 hour
+
+    // initialize is gated to the program's upgrade authority (the test wallet,
+    // which deploys the program) via the ProgramData account.
+    const [programData] = PublicKey.findProgramAddressSync(
+      [program.programId.toBuffer()],
+      new PublicKey("BPFLoaderUpgradeab1e11111111111111111111111")
+    );
+
     await program.methods
       .initialize(
         usdcMint,
@@ -79,9 +87,11 @@ describe("token_sale_project", () => {
         startTs,
         endTs
       )
-      .accounts({
+      .accountsPartial({
         saleConfig: icoStatePda,
         admin: payer.publicKey,
+        program: program.programId,
+        programData,
         systemProgram: SystemProgram.programId,
       })
       .rpc();

@@ -22,7 +22,6 @@ id.json
 .idea/
 .vscode
 .vscode/settings.json
-.claude/
 
 # Shell / system dotfiles (should not be in a project repo)
 .bash_profile
@@ -32,5 +31,4 @@ id.json
 .profile
 .gitconfig
 .gitmodules
-.mcp.json
 .ripgreprc

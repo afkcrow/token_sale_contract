@@ -192,6 +192,15 @@ pub struct Initialize<'info> {
     pub sale_config: Account<'info, IcoState>,
     #[account(mut)]
     pub admin: Signer<'info>,
+
+    // Gate initialization to the program's upgrade authority. Without this,
+    // anyone could front-run `initialize` to claim the singleton sale_config
+    // PDA and become the permanent admin (there is no admin-transfer path).
+    #[account(constraint = program.programdata_address()? == Some(program_data.key()) @ ErrorCode::Unauthorized)]
+    pub program: Program<'info, program::TokenSaleProject>,
+    #[account(constraint = program_data.upgrade_authority_address == Some(admin.key()) @ ErrorCode::Unauthorized)]
+    pub program_data: Account<'info, ProgramData>,
+
     pub system_program: Program<'info, System>,
 }
 

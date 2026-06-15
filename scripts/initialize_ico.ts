@@ -17,6 +17,12 @@ async function initializeSale() {
     program.programId
   );
 
+  // ProgramData account (holds the upgrade authority). initialize is gated to it.
+  const [programData] = PublicKey.findProgramAddressSync(
+    [program.programId.toBuffer()],
+    new PublicKey("BPFLoaderUpgradeab1e11111111111111111111111")
+  );
+
   // Configure for your sale (or wire to env / CLI args).
   const usdcMint = new PublicKey(process.env.USDC_MINT ?? "");
   const tokenMint = new PublicKey(process.env.TOKEN_MINT ?? "");
@@ -41,6 +47,8 @@ async function initializeSale() {
     .accountsPartial({
       saleConfig,
       admin,
+      program: program.programId,
+      programData,
       systemProgram: SystemProgram.programId,
     })
     .rpc();
